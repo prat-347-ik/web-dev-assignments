@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bg Color Changer</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      transition: background-color 0.3s ease;
+    }
+
+    h1 {
+      margin-top: 40px;
+    }
+
+    .button-container {
+      margin-top: 20px;
+    }
+
+    .color-button {
+      padding: 12px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .add-color-section {
+      margin-top: 30px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      width: 200px;
+      font-size: 16px;
+    }
+
+    #addColorBtn {
+      padding: 10px 20px;
+      margin-left: 10px;
+      font-size: 16px;
+      border: none;
+      background-color: #333;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #error-message {
+      color: red;
+      margin-top: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Background Color Changer</h1>
+
+  <div class="button-container" id="colorPanel">
+    <button class="color-button" style="background-color: red;" onclick="changeBgColor('red')">Red</button>
+    <button class="color-button" style="background-color: green;" onclick="changeBgColor('green')">Green</button>
+    <button class="color-button" style="background-color: blue;" onclick="changeBgColor('blue')">Blue</button>
+  </div>
+
+  <div class="add-color-section">
+    <input type="text" id="colorInput" placeholder="Enter color name or hex code">
+    <button id="addColorBtn" onclick="addColor()">Add Color</button>
+    <div id="error-message">Invalid color! Try a valid name or hex.</div>
+  </div>
+
+  <script>
+    function changeBgColor(color) {
+      document.body.style.backgroundColor = color;
+    }
+
+    function addColor() {
+      const input = document.getElementById("colorInput");
+      const colorName = input.value.trim().toLowerCase();
+      const testDiv = document.createElement("div");
+
+      testDiv.style.color = colorName;
+      if (testDiv.style.color === "") {
+        document.getElementById("error-message").style.display = "block";
+        return;
+      }
+
+      document.getElementById("error-message").style.display = "none";
+
+      const btn = document.createElement("button");
+      btn.className = "color-button";
+      btn.style.backgroundColor = colorName;
+      btn.textContent = colorName.charAt(0).toUpperCase() + colorName.slice(1);
+      btn.onclick = () => changeBgColor(colorName);
+
+      document.getElementById("colorPanel").appendChild(btn);
+      input.value = "";
+    }
+  </script>
+
+</body>
+</html>
